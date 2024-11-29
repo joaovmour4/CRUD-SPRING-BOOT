@@ -7,5 +7,5 @@ import com.example.api.entities.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    User findByUsername(String name);
+    User findByName(String username);
 }

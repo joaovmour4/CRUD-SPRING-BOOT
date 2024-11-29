@@ -23,7 +23,7 @@ public class UserService {
 
     public RecoveryUserDto createUser(CreateUserDto createUserDto){
 
-        User findUser = userRepository.findByUsername(createUserDto.name());
+        User findUser = userRepository.findByName(createUserDto.name());
 
         if(findUser != null){
             throw new RuntimeException("O nome de usuário já existe.");
@@ -48,8 +48,8 @@ public class UserService {
         return users.stream().map(user -> userMapper.recoveryUserToDto(user)).toList();
     }
 
-    public RecoveryUserDto getUserByUsername(String name){
-        User user = userRepository.findByUsername(name);
+    public RecoveryUserDto getUserByName(String username){
+        User user = userRepository.findByName(username);
         return userMapper.recoveryUserToDto(user);
     }
 

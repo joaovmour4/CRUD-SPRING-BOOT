@@ -35,7 +35,7 @@ public class UserController {
 
     @GetMapping("/{name}")
     public ResponseEntity<RecoveryUserDto> getUser(@PathVariable String name){
-        return new ResponseEntity<>(userService.getUserByUsername(name), HttpStatus.OK);
+        return new ResponseEntity<>(userService.getUserByName(name), HttpStatus.OK);
     }
 
 }
