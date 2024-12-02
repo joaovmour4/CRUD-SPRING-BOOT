@@ -3,6 +3,8 @@ package com.example.api.services;
 import com.example.api.dto.CreateUserDto;
 import com.example.api.dto.RecoveryUserDto;
 import com.example.api.entities.User;
+import com.example.api.exceptions.ResourceAlreadyExistsException;
+import com.example.api.exceptions.ResourceNotFoundException;
 import com.example.api.mappers.UserMapper;
 
 import java.util.List;
@@ -23,12 +25,10 @@ public class UserService {
 
     public RecoveryUserDto createUser(CreateUserDto createUserDto){
 
-        User findUser = userRepository.findByName(createUserDto.name());
-
-        if(findUser != null){
-            throw new RuntimeException("O nome de usuário já existe.");
-        }
-
+        userRepository.findByName(createUserDto.name())
+                    .ifPresent(user -> {
+                        throw new ResourceAlreadyExistsException("Já existe um usuário com este nome");
+                    });
 
         User user = User.builder()
                 .name(createUserDto.name())
@@ -49,7 +49,9 @@ public class UserService {
     }
 
     public RecoveryUserDto getUserByName(String username){
-        User user = userRepository.findByName(username);
+        User user = userRepository.findByName(username)
+                    .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
+
         return userMapper.recoveryUserToDto(user);
     }
 

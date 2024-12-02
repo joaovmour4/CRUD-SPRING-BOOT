@@ -6,7 +6,6 @@ import com.example.api.dto.RecoveryFindUserDto;
 import com.example.api.dto.RecoveryUserDto;
 import com.example.api.entities.User;
 
-import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
