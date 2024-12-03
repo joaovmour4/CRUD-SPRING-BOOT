@@ -27,4 +27,13 @@ public class GlobalExceptionHandler {
         errorResponse.put("message", "Already exists a user with that username");
         return errorResponse;
     }
+
+    @ExceptionHandler(AuthenticationFailedException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public Map<String, String> handleAuthenticationFailedExcetion(AuthenticationFailedException ex){
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("error", "Unauthorized");
+        errorResponse.put("message", "Invalid credentials");
+        return errorResponse;
+    }
 }
