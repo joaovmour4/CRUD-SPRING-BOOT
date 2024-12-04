@@ -2,7 +2,6 @@ package com.example.api.services;
 
 import com.example.api.dto.CreateUserDto;
 import com.example.api.dto.RecoveryUserDto;
-import com.example.api.dto.RecoveryUserLoginDto;
 import com.example.api.entities.User;
 import com.example.api.exceptions.AuthenticationFailedException;
 import com.example.api.exceptions.ResourceAlreadyExistsException;

@@ -24,7 +24,7 @@ public class GlobalExceptionHandler {
     public Map<String, String> handleResourceAlreadyExistsException(ResourceAlreadyExistsException ex){
         Map<String, String> errorResponse = new HashMap<>();
         errorResponse.put("error", "Conflict");
-        errorResponse.put("message", "Already exists a user with that username");
+        errorResponse.put("message", ex.getMessage());
         return errorResponse;
     }
 
@@ -33,7 +33,7 @@ public class GlobalExceptionHandler {
     public Map<String, String> handleAuthenticationFailedExcetion(AuthenticationFailedException ex){
         Map<String, String> errorResponse = new HashMap<>();
         errorResponse.put("error", "Unauthorized");
-        errorResponse.put("message", "Invalid credentials");
+        errorResponse.put("message", ex.getMessage());
         return errorResponse;
     }
 }
