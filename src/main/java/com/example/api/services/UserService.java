@@ -29,10 +29,13 @@ public class UserService {
 
     public RecoveryUserDto createUser(CreateUserDto createUserDto){
 
-        userRepository.findByName(createUserDto.name())
-                    .ifPresent(user -> {
-                        throw new ResourceAlreadyExistsException("Já existe um usuário com este nome");
-                    });
+        if(userRepository.existsByName(createUserDto.name())){
+            throw new ResourceAlreadyExistsException("Já existe um usuário com este nome");
+        }
+
+        if(userRepository.existsByEmail(createUserDto.email())){
+            throw new ResourceAlreadyExistsException("Já existe um usuário com este email");
+        }
 
         User user = User.builder()
                 .name(createUserDto.name())

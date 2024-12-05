@@ -16,6 +16,8 @@ import com.example.api.dto.CreateUserDto;
 import com.example.api.dto.RecoveryUserDto;
 import com.example.api.services.UserService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -24,7 +26,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping
-    public ResponseEntity<RecoveryUserDto> createUser(@RequestBody CreateUserDto createUserDto){
+    public ResponseEntity<RecoveryUserDto> createUser(@RequestBody @Valid CreateUserDto createUserDto){
         return new ResponseEntity<>(userService.createUser(createUserDto), HttpStatus.CREATED);
     }
 
