@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.3.6</version>
+		<version>3.4.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
@@ -95,6 +95,12 @@
 			<version>1.5.5.Final</version>
 		</dependency>
 		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct-processor</artifactId>
+			<version>1.5.5.Final</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok-mapstruct-binding</artifactId>
 			<version>0.2.0</version>
@@ -111,9 +117,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>17</source> <!-- Sua versão do Java -->
-					<target>17</target> <!-- Sua versão do Java -->
+				<configuration> <!-- Sua versão do Java --> <!-- Sua versão do Java -->
 					<annotationProcessorPaths>
 						<path>
 							<groupId>org.mapstruct</groupId>
@@ -131,6 +135,7 @@
 							<version>0.2.0</version>
 						</path>
 					</annotationProcessorPaths>
+					<release>${java.version}</release>
 				</configuration>
 			</plugin>
 			<plugin>
