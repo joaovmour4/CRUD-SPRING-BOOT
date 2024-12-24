@@ -18,7 +18,7 @@ public class WeedService {
     @Autowired
     WeedMapper weedMapper;
     
-    public RecoveryWeedDto getWeedById(Long id){
+    public RecoveryWeedDto getWeedById(long id){
         Weed weed = weedRepository.findByIdWithImages(id)
                                     .orElseThrow(()-> new ResourceNotFoundException("Não encontrado"));
         

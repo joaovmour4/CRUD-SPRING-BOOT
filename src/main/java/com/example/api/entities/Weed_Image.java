@@ -30,7 +30,7 @@ public class Weed_Image {
 
     @ManyToOne
     @JoinColumn(name = "id_weed", nullable = false)
-    private Long id_weed;
+    private Weed weed;
 
     private String url_s3;
 

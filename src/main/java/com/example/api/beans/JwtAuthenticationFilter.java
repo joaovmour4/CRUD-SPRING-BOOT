@@ -22,13 +22,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         this.tokenService = tokenService;
     }
 
-    @SuppressWarnings("null")
+    // @SuppressWarnings("null")
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token = extractTokenFromHeader(request);
 
         if (token != null && tokenService.validateToken(token)) {
-            String username = tokenService.getUsernameFromToken(token);
+            // String username = tokenService.getUsernameFromToken(token);
             var authentication = tokenService.getAuthentication(token); // Obtem a autenticação do token
             if (authentication != null) {
                 SecurityContextHolder.getContext().setAuthentication(authentication); // Configura o contexto de segurança
