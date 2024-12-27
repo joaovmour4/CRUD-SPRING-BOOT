@@ -22,7 +22,7 @@ public class WeedController {
 
     @GetMapping("/name/{name}")
     public ResponseEntity<RecoveryWeedDto> getWeedByName(@PathVariable String name) {
-        RecoveryWeedDto weed = weedService.getWeedByName(name);
+        RecoveryWeedDto weed = weedService.getWeedByPopularName(name);
         return new ResponseEntity<>(weed, HttpStatus.OK);
     }
 

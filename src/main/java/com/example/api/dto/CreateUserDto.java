@@ -22,7 +22,12 @@ public record CreateUserDto(
     @Valid
     @NotBlank
     @Size(min = 8)
-    String password
+    String password,
+
+    @Valid
+    @NotBlank
+    @Size(min = 2)
+    String city
 ) {
     
 }

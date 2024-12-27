@@ -3,6 +3,7 @@ package com.example.api.entities;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,11 +29,16 @@ public class Weed {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    @Column(name = "scientific_name")
+    private String scientificName;
+    
+    @Column(name = "popular_name")
+    private String popularName;
 
     private String description;
 
-    private String combat;
+    @Column(name = "quimic_component")
+    private String quimicComponent;
 
     @OneToMany(mappedBy = "weed", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Weed_Image> images;

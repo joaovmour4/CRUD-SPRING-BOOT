@@ -41,6 +41,7 @@ public class UserService {
                 .name(createUserDto.name())
                 .email(createUserDto.email())
                 .password(passwordService.hashPassword(createUserDto.password()))
+                .city(createUserDto.city())
                 .build();
 
         User userSaved = userRepository.save(user);

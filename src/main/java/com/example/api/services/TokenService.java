@@ -1,11 +1,8 @@
 package com.example.api.services;
 
 import java.security.Key;
-import java.util.Base64;
 import java.util.Collections;
 import java.util.Date;
-
-import javax.crypto.spec.SecretKeySpec;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

@@ -25,8 +25,8 @@ public class WeedService {
         return weedMapper.weedToWeedDto(weed);
     }
 
-    public RecoveryWeedDto getWeedByName(String name){
-        Weed weed = weedRepository.findByName(name)
+    public RecoveryWeedDto getWeedByPopularName(String name){
+        Weed weed = weedRepository.findByPopularName(name)
                                     .orElseThrow(()-> new ResourceNotFoundException("Não Encontrado"));
 
         return weedMapper.weedToWeedDto(weed);

@@ -3,10 +3,10 @@ package com.example.api.dto;
 import java.util.List;
 
 public record RecoveryWeedDto(
-    Long id,
-    String name,
+    String scientificName,
+    String popularName,
     String description,
-    String combat,
+    String quimicComponent,
     List<String> image_urls
 ) {
     

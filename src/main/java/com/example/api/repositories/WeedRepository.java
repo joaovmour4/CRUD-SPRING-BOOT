@@ -12,5 +12,7 @@ public interface WeedRepository extends JpaRepository<Weed, Long> {
     @Query("SELECT w FROM Weed w JOIN FETCH w.images WHERE w.id = :id")
     Optional<Weed> findByIdWithImages(@Param("id") Long id);
 
-    Optional<Weed> findByName(String name);
+    // Optional<Weed> findByScientificName(String name);
+
+    Optional<Weed> findByPopularName(String name);
 }

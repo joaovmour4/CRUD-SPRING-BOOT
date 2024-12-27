@@ -2,10 +2,15 @@ package com.example.api.entities;
 
 import java.sql.Date;
 
+import jakarta.annotation.Nonnull;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,14 +29,27 @@ public class Analysis {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    private Long id_user;
+    @Column(name = "id_analysis")
+    private Long idAnalysis;
 
-    private Long id_specie;
+    @Column(name = "id_user")
+    private Long idUser;
+
+    // @Column(name = "id_especie")
+    @Column(name = "id_weed")
+    @ManyToMany
+    @JoinTable(
+        name = "analysis_weed",
+        joinColumns = @JoinColumn(name = "id_analysis"),
+        inverseJoinColumns = @JoinColumn(name = "weed_id")
+    )
+    private Long idWeed;
     
+    @Nonnull
     private Boolean result;
 
+    @Nonnull
     private Date analysis_date;
     
 }
