@@ -1,6 +1,8 @@
 package com.example.api.entities;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.Column;
@@ -36,20 +38,19 @@ public class Analysis {
     @Column(name = "id_user")
     private Long idUser;
 
-    // @Column(name = "id_especie")
+    @Nonnull
+    private Boolean result;
+    
+    @Nonnull
+    private Date analysis_date;
+    
     @Column(name = "id_weed")
     @ManyToMany
     @JoinTable(
         name = "analysis_weed",
         joinColumns = @JoinColumn(name = "id_analysis"),
-        inverseJoinColumns = @JoinColumn(name = "weed_id")
+        inverseJoinColumns = @JoinColumn(name = "id_weed")
     )
-    private Long idWeed;
-    
-    @Nonnull
-    private Boolean result;
-
-    @Nonnull
-    private Date analysis_date;
+    private List<Weed> weeds;
     
 }
