@@ -16,6 +16,9 @@ public interface WeedMapper {
     @Mapping(source = "images", target = "image_urls", qualifiedByName = "mapUrls")
     RecoveryWeedDto weedToWeedDto(Weed weed);
 
+    @Mapping(source = "images", target = "image_urls", qualifiedByName = "mapUrls")
+    List<Weed> weedsToWeedsDto(List<Weed> weeds);
+
     @Named("mapUrls")
     default List<String> mapUrls(List<Weed_Image> images){
         return images.stream()

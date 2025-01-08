@@ -1,5 +1,6 @@
 package com.example.api.repositories;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,6 +12,9 @@ import com.example.api.entities.Weed;
 public interface WeedRepository extends JpaRepository<Weed, Long> {
     @Query("SELECT w FROM Weed w JOIN FETCH w.images WHERE w.id = :id")
     Optional<Weed> findByIdWithImages(@Param("id") Long id);
+
+    @Query("SELECT w FROM Weed w WHERE w.id IN :weeds")
+    List<Weed> findAllByIds(@Param("weeds") List<Long> weeds);
 
     // Optional<Weed> findByScientificName(String name);
 
