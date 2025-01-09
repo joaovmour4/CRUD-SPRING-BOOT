@@ -1,5 +1,6 @@
 package com.example.api.repositories;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -13,8 +14,8 @@ public interface WeedRepository extends JpaRepository<Weed, Long> {
     @Query("SELECT w FROM Weed w JOIN FETCH w.images WHERE w.id = :id")
     Optional<Weed> findByIdWithImages(@Param("id") Long id);
 
-    @Query("SELECT w FROM Weed w JOIN FETCH w.images WHERE (w.id IN :weeds) AND (w.id = :id)")
-    Set<Weed> findAllByIds(@Param("weeds") Set<Long> weeds);
+    @Query("SELECT w FROM Weed w WHERE w.id IN :weeds")
+    Set<Weed> findAllByIds(@Param("weeds") List<Long> weeds);
 
     // Optional<Weed> findByScientificName(String name);
 

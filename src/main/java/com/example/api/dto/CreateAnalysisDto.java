@@ -1,12 +1,12 @@
 package com.example.api.dto;
 
 import java.sql.Date;
-import java.util.Set;
+import java.util.List;
 
 public record CreateAnalysisDto(
     Long idUser,
     Boolean result,
-    Set<Long> weeds,
+    List<Long> weeds,
     Date analysis_date
 ) {
     

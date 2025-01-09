@@ -1,5 +1,6 @@
 package com.example.api.services;
 
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class WeedService {
         return weedMapper.weedToWeedDto(weed);
     }
 
-    public Set<Weed> getWeedsByArrayId(Set<Long> weeds){
+    public Set<Weed> getWeedsByArrayId(List<Long> weeds){
         Set<Weed> weedsList = weedRepository.findAllByIds(weeds);
         return weedMapper.weedsToWeedsDto(weedsList);
     }
