@@ -12,7 +12,7 @@ import com.example.api.entities.Analysis;
 @Repository
 public interface AnalysisRepository extends JpaRepository<Analysis, Long> {
     
-    // @Query("SELECT a FROM Analysis JOIN FETCH a.weeds WHERE a.id = :id")
-    // Optional<Analysis> findByIdWithResultWeeds(@Param("id") Long id);
+    @Query("SELECT a FROM Analysis a JOIN FETCH a.weeds w LEFT JOIN FETCH w.images i WHERE a.id = :id")
+    Optional<Analysis> findByIdWithResultWeeds(@Param("id") Long id);
 
 }

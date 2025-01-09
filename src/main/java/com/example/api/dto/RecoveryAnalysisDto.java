@@ -1,13 +1,11 @@
 package com.example.api.dto;
 
 import java.sql.Date;
-import java.util.List;
-
-import com.example.api.entities.Weed;
+import java.util.Set;
 
 public record RecoveryAnalysisDto(
-    Long idAnalysis,
-    List<Weed> weeds,
+    Long id,
+    Set<RecoveryWeedDto> weeds,
     Boolean result,
     Date analysis_date
 ) {

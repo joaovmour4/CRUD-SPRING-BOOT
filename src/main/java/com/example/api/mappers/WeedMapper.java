@@ -1,6 +1,7 @@
 package com.example.api.mappers;
 
 import java.util.List;
+import java.util.Set;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -17,7 +18,7 @@ public interface WeedMapper {
     RecoveryWeedDto weedToWeedDto(Weed weed);
 
     @Mapping(source = "images", target = "image_urls", qualifiedByName = "mapUrls")
-    List<Weed> weedsToWeedsDto(List<Weed> weeds);
+    Set<Weed> weedsToWeedsDto(Set<Weed> weeds);
 
     @Named("mapUrls")
     default List<String> mapUrls(List<Weed_Image> images){
