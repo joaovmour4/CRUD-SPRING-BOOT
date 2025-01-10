@@ -3,11 +3,15 @@ package com.example.api.exceptions;
 import java.util.HashMap;
 import java.util.Map;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+// import org.springframework.web.ErrorResponse;
 
+@Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(ResourceNotFoundException.class)
@@ -35,5 +39,11 @@ public class GlobalExceptionHandler {
         errorResponse.put("error", "Unauthorized");
         errorResponse.put("message", ex.getMessage());
         return errorResponse;
+    }
+
+    @ExceptionHandler(value = {UploadFileException.class})
+    protected ResponseEntity<ErrorResponse> handleUploadFileException(UploadFileException e) {
+        log.error("handleUploadFileException throw UploadFileException : {}", e.getErrorCode());
+        return ErrorResponse.toResponseEntity(e.getErrorCode());
     }
 }

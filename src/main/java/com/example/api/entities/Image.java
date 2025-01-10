@@ -2,10 +2,13 @@ package com.example.api.entities;
 
 import java.sql.Date;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,7 +29,9 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long id_analysis;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "analysis_id", referencedColumnName = "id")
+    private Analysis analysis;
 
     private String url_s3;
 
