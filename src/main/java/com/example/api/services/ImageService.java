@@ -4,11 +4,13 @@ import java.sql.Date;
 import java.text.MessageFormat;
 import java.util.Calendar;
 
+import org.opencv.core.Mat;
+import org.opencv.imgcodecs.Imgcodecs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.example.api.dto.RecoveryImageDto;
+import com.example.api.dto.UploadFileDto;
 import com.example.api.entities.Image;
 import com.example.api.exceptions.ResourceNotFoundException;
 import com.example.api.mappers.ImageMapper;
@@ -23,22 +25,27 @@ public class ImageService {
     @Autowired
     private ImageMapper imageMapper;
 
-    public RecoveryImageDto uploadImage(MultipartFile file){
-        if(file.isEmpty()){
-            throw new ResourceNotFoundException("Nenhum arquivo encontrado na requisição.");
-        }
+    public Image uploadImage(UploadFileDto uploadFileDto){
+        // if(uploadFileDto.file().isEmpty()){
+        //     throw new ResourceNotFoundException("Nenhum arquivo encontrado na requisição.");
+        // }
 
-        String imageUrl = MessageFormat.format("https://example.com/images/{0}", file.getOriginalFilename());
+        String imageUrl = MessageFormat.format("https://example.com/images/analysis_{0}", uploadFileDto.analysis().getId());
 
         Image image = Image.builder()
+            .analysis(uploadFileDto.analysis())
             .url_s3(imageUrl)
-            .type(file.getContentType())
+            .type("image/jpeg")
             .upload_date(new Date(Calendar.getInstance().getTime().getTime()))
             .build();
 
         Image imageSaved = imageRepository.save(image);
 
-        return imageMapper.recoveryImageToDto(imageSaved);
+        return imageSaved;
+    }
+
+    public void saveImage(Mat image, Long id){
+        Imgcodecs.imwrite(MessageFormat.format("analysis_{0}.jpeg", id), image);
     }
 
     public RecoveryImageDto getImageById(Long id){
