@@ -1,5 +1,7 @@
 package com.example.api.mappers;
 
+import java.util.List;
+
 import org.mapstruct.Mapper;
 
 import com.example.api.dto.RecoveryAnalysisDto;
@@ -8,5 +10,7 @@ import com.example.api.entities.Analysis;
 public interface AnalysisMapper {
 
     RecoveryAnalysisDto recoveryAnalysisToDto(Analysis analysis);
+
+    List<RecoveryAnalysisDto> recoveryAnalysiesDto(List<Analysis> analysies);
 
 }

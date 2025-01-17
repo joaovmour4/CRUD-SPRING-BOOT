@@ -39,16 +39,9 @@ public class DetectionService {
         if (!mimeTypes.contains(uploadFile.getContentType())) throw new UploadFileException(ErrorCode.INVALID_MIME_TYPE);
         byte[] bytes = uploadFile.getBytes();
         Mat img = Imgcodecs.imdecode(new MatOfByte(bytes), Imgcodecs.IMREAD_COLOR);
-        List<Detection> result = inferenceSession.run(img);
-        // List<Long> weeds = new ArrayList<Long>();
-        // weeds.add(1L);
-        // weeds.add(2L);
-        // CreateAnalysisDto createAnalysisDto = new CreateAnalysisDto(1L, result.size() > 0, weeds, new Date(Calendar.getInstance().getTime().getTime()));
-        // RecoveryAnalysisDto recoveryAnalysisDto = analysisService.createAnalysis(createAnalysisDto);        
+        List<Detection> result = inferenceSession.run(img);    
         ImageUtil.drawPredictions(img, result);
         Date analysis_date = new Date(Calendar.getInstance().getTime().getTime());
-        // Imgcodecs.imwrite("predictions.jpg", img);
-        // LOGGER.info("POST 200");
 
         return new RecoveryDetectionDto(img, result, analysis_date);
     }

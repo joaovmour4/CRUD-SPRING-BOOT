@@ -31,6 +31,9 @@ public class AnalysisController {
 
     @PostMapping()
     public ResponseEntity<RecoveryAnalysisDto> createAnalysis(@RequestParam("file") MultipartFile file) throws OrtException, IOException {
+        if (file.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         RecoveryAnalysisDto analysis = analysisService.createAnalysis(file);
         return new ResponseEntity<>(analysis, HttpStatus.CREATED);
     }
@@ -40,6 +43,5 @@ public class AnalysisController {
         RecoveryAnalysisDto analysis = analysisService.getAnalysisById(id);
         return new ResponseEntity<>(analysis, HttpStatus.ACCEPTED);
     }
-    
 
 }

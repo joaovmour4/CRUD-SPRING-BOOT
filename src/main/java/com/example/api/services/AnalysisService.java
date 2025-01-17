@@ -44,8 +44,6 @@ public class AnalysisService {
 
         RecoveryDetectionDto result = detectionService.detection(file);
 
-        System.out.println(result.detections());
-
         List<Long> weedIds = new ArrayList<>();
         weedIds.add(1L);
         weedIds.add(2L);

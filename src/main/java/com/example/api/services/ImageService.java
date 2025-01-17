@@ -1,5 +1,6 @@
 package com.example.api.services;
 
+import java.io.IOException;
 import java.sql.Date;
 import java.text.MessageFormat;
 import java.util.Calendar;
@@ -15,6 +16,7 @@ import com.example.api.entities.Image;
 import com.example.api.exceptions.ResourceNotFoundException;
 import com.example.api.mappers.ImageMapper;
 import com.example.api.repositories.ImageRepository;
+import com.example.api.services.S3UploaderService;
 
 @Service
 public class ImageService {
@@ -25,12 +27,13 @@ public class ImageService {
     @Autowired
     private ImageMapper imageMapper;
 
-    public Image uploadImage(UploadFileDto uploadFileDto){
-        // if(uploadFileDto.file().isEmpty()){
-        //     throw new ResourceNotFoundException("Nenhum arquivo encontrado na requisição.");
-        // }
+    @Autowired
+    private S3UploaderService s3UploadersService;
 
-        String imageUrl = MessageFormat.format("https://example.com/images/analysis_{0}", uploadFileDto.analysis().getId());
+    public Image uploadImage(UploadFileDto uploadFileDto) throws IOException{
+
+        String imageUrl = s3UploadersService.uploadAnalysisImageToBucketS3(uploadFileDto.file(), uploadFileDto.analysis().getId());
+        // String imageUrl = MessageFormat.format("https://example.com/images/analysis_{0}", uploadFileDto.analysis().getId());
 
         Image image = Image.builder()
             .analysis(uploadFileDto.analysis())
