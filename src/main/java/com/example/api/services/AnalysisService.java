@@ -75,7 +75,7 @@ public class AnalysisService {
         analysisSaved.setThumbnail(thumbnailUrl);
         analysis.setImage(image);
         analysisRepository.save(analysisSaved);
-        imageService.saveImage(result.image(), analysisSaved.getId());  
+        // imageService.saveImage(result.image(), analysisSaved.getId());  
 
         return analysisMapper.recoveryAnalysisToDto(analysisSaved);
     }
