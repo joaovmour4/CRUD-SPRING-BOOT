@@ -9,6 +9,7 @@ import com.example.api.services.AnalysisService;
 import ai.onnxruntime.OrtException;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,8 +38,15 @@ public class AnalysisController {
         RecoveryAnalysisDto analysis = analysisService.createAnalysis(file);
         return new ResponseEntity<>(analysis, HttpStatus.CREATED);
     }
+
+    @GetMapping("/user/{id}")
+    public ResponseEntity<List<RecoveryAnalysisDto>> getAnalysisByUser(@PathVariable Long id) {
+        List<RecoveryAnalysisDto> analysies = analysisService.getAnalysisByUser(id);
+        return new ResponseEntity<>(analysies, HttpStatus.ACCEPTED);
+    }
     
-    @GetMapping("/{id}")
+    
+    @GetMapping("/id/{id}")
     public ResponseEntity<RecoveryAnalysisDto> getAnalysis(@PathVariable Long id) {
         RecoveryAnalysisDto analysis = analysisService.getAnalysisById(id);
         return new ResponseEntity<>(analysis, HttpStatus.ACCEPTED);

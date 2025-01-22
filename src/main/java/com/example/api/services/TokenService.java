@@ -23,9 +23,9 @@ public class TokenService {
     private static final Key SECRET_KEY = Keys.hmacShaKeyFor(SECRET_STRING.getBytes(StandardCharsets.UTF_8));
     // private static final Key SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
-    public String generateToken(String username){
+    public String generateToken(Long id){
         return Jwts.builder()
-            .setSubject(username)
+            .setSubject(id.toString())
             .setIssuedAt(new Date())
             .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
             .signWith(SECRET_KEY)
@@ -53,7 +53,7 @@ public class TokenService {
         return new UsernamePasswordAuthenticationToken(token, claims, authorities);
     }
 
-    public String getUsernameFromToken(String token){
+    public String getIdUserFromToken(String token){
         return Jwts.parserBuilder()
                 .setSigningKey(SECRET_KEY)
                 .build()

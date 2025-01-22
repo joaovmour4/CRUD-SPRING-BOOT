@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,6 +23,7 @@ import com.example.api.mappers.AnalysisMapper;
 import com.example.api.repositories.AnalysisRepository;
 
 import ai.onnxruntime.OrtException;
+import ch.qos.logback.core.subst.Token;
 
 @Service
 public class AnalysisService {
@@ -40,9 +43,14 @@ public class AnalysisService {
     @Autowired
     private ImageService imageService;
 
+    @Autowired
+    private TokenService tokenService;
+
     public RecoveryAnalysisDto createAnalysis(MultipartFile file) throws OrtException, IOException {
 
         RecoveryDetectionDto result = detectionService.detection(file);
+        Object authentication = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String id = tokenService.getIdUserFromToken(authentication.toString());
 
         List<Long> weedIds = new ArrayList<>();
         weedIds.add(1L);
@@ -51,7 +59,7 @@ public class AnalysisService {
         Set<Weed> weeds = weedService.getWeedsByArrayId(weedIds);
 
         Analysis analysis = Analysis.builder()
-                                    .idUser(1L)
+                                    .idUser(Long.parseLong(id))
                                     .result(result.detections().size() > 0)
                                     .analysis_date(result.analysis_date())
                                     .weeds(weeds)
@@ -62,7 +70,11 @@ public class AnalysisService {
         
         Image image = imageService.uploadImage(new UploadFileDto(analysis, result.image()));
 
+        String thumbnailUrl = imageService.uploadThumbnail(new UploadFileDto(analysis, result.image()));
+
+        analysisSaved.setThumbnail(thumbnailUrl);
         analysis.setImage(image);
+        analysisRepository.save(analysisSaved);
         imageService.saveImage(result.image(), analysisSaved.getId());  
 
         return analysisMapper.recoveryAnalysisToDto(analysisSaved);
@@ -72,6 +84,13 @@ public class AnalysisService {
         Analysis analysis = analysisRepository.findByIdWithResultWeeds(id)
                                                 .orElseThrow(()-> new ResourceNotFoundException("Análise não encontrada"));
         return analysisMapper.recoveryAnalysisToDto(analysis);
+    }
+
+    public List<RecoveryAnalysisDto> getAnalysisByUser(long idUser){
+        List<Analysis> analysies = analysisRepository.findAllByIdUser(idUser);
+
+        return analysisMapper.recoveryAnalysiesDto(analysies);
+
     }
 
 }

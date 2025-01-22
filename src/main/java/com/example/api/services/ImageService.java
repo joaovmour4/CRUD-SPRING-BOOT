@@ -47,6 +47,11 @@ public class ImageService {
         return imageSaved;
     }
 
+    public String uploadThumbnail(UploadFileDto uploadFileDto) throws IOException{
+        String thumbnailUrl = s3UploadersService.uploadAnalysisThumbnailToBucketS3(uploadFileDto.file(), uploadFileDto.analysis().getId());
+        return thumbnailUrl;
+    }
+
     public void saveImage(Mat image, Long id){
         Imgcodecs.imwrite(MessageFormat.format("analysis_{0}.jpeg", id), image);
     }

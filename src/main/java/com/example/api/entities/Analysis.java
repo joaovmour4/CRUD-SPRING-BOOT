@@ -35,6 +35,8 @@ public class Analysis {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String thumbnail;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "image_id", referencedColumnName = "id")
     private Image image;

@@ -21,7 +21,7 @@ public record CreateUserDto(
 
     @Valid
     @NotBlank
-    @Size(min = 8)
+    @Size(min = 5)
     String password,
 
     @Valid
