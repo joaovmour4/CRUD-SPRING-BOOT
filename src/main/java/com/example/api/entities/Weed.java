@@ -29,6 +29,8 @@ public class Weed {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String thumbnail;
+
     @Column(name = "scientific_name")
     private String scientificName;
     

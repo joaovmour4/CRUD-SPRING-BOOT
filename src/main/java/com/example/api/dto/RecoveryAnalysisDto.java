@@ -5,6 +5,7 @@ import java.util.Set;
 
 public record RecoveryAnalysisDto(
     Long id,
+    String name,
     RecoveryImageWithoutAnalysisDto image,
     String thumbnail,
     Set<RecoveryWeedDto> weeds,

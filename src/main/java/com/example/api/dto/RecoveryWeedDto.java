@@ -3,6 +3,7 @@ package com.example.api.dto;
 import java.util.List;
 
 public record RecoveryWeedDto(
+    String thumbnail,
     String scientificName,
     String popularName,
     String description,

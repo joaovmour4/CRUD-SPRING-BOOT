@@ -80,6 +80,16 @@ public class AnalysisService {
         return analysisMapper.recoveryAnalysisToDto(analysisSaved);
     }
 
+    public RecoveryAnalysisDto updateAnalysisName(Long id, String name){
+        Analysis analysis = analysisRepository.findById(id)
+                                                .orElseThrow(() -> new ResourceNotFoundException("Análise não encontrada"));
+        analysis.setName(name);
+
+        Analysis analysisSaved = analysisRepository.save(analysis);
+
+        return analysisMapper.recoveryAnalysisToDto(analysisSaved);
+    }
+
     public RecoveryAnalysisDto getAnalysisById(Long id){
         Analysis analysis = analysisRepository.findByIdWithResultWeeds(id)
                                                 .orElseThrow(()-> new ResourceNotFoundException("Análise não encontrada"));

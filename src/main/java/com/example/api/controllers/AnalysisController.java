@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.api.dto.RecoveryAnalysisDto;
+import com.example.api.dto.UpdateAnalysisNameDto;
 import com.example.api.services.AnalysisService;
 
 import ai.onnxruntime.OrtException;
@@ -19,6 +20,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 
@@ -37,6 +41,13 @@ public class AnalysisController {
         }
         RecoveryAnalysisDto analysis = analysisService.createAnalysis(file);
         return new ResponseEntity<>(analysis, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/name/{id}")
+    public ResponseEntity<RecoveryAnalysisDto> putAnalysisName(@PathVariable Long id, @RequestBody UpdateAnalysisNameDto updateAnalysisNameDto) {
+        RecoveryAnalysisDto recoveryAnalysisDto = analysisService.updateAnalysisName(id, updateAnalysisNameDto.name());
+        
+        return new ResponseEntity<>(recoveryAnalysisDto, HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/user/{id}")
