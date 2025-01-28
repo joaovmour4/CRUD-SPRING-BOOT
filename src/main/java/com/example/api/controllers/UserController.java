@@ -1,5 +1,6 @@
 package com.example.api.controllers;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +11,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.api.dto.CreateUserDto;
 import com.example.api.dto.RecoveryUserDto;
 import com.example.api.services.UserService;
 
+import ai.onnxruntime.OrtException;
 import jakarta.validation.Valid;
 
 @RestController
@@ -35,11 +39,25 @@ public class UserController {
         return new ResponseEntity<>(userService.getUsers(), HttpStatus.OK);
     }
 
-    @GetMapping("/{name}")
+    @GetMapping("/name/{name}")
     public ResponseEntity<RecoveryUserDto> getUser(@PathVariable String name){
         RecoveryUserDto user = userService.getUserByName(name);
 
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
+
+    @GetMapping("/id/{id}")
+    public ResponseEntity<RecoveryUserDto> getUserById(@PathVariable Long id){
+        RecoveryUserDto user = userService.getUserById(id);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @PostMapping("/image/{id}")
+    public ResponseEntity<RecoveryUserDto> setProfileImageByUserId(@RequestParam MultipartFile file, @PathVariable Long id) throws OrtException, IOException {
+        RecoveryUserDto user = userService.sendProfileImage(file, id);
+        
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+    
 
 }

@@ -41,9 +41,19 @@ public class GlobalExceptionHandler {
         return errorResponse;
     }
 
-    @ExceptionHandler(value = {UploadFileException.class})
-    protected ResponseEntity<ErrorResponse> handleUploadFileException(UploadFileException e) {
-        log.error("handleUploadFileException throw UploadFileException : {}", e.getErrorCode());
-        return ErrorResponse.toResponseEntity(e.getErrorCode());
+    @ExceptionHandler(UploadFileException.class)
+    protected ResponseEntity<ErrorResponse> handleUploadFileException(UploadFileException ex) {
+        log.error("handleUploadFileException throw UploadFileException : {}", ex.getErrorCode());
+        return ErrorResponse.toResponseEntity(ex.getErrorCode());
     }
+
+    @ExceptionHandler(value = {AWSException.class})
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Map<String, String> handleAwsException(AWSException ex) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("error", "Internal Error");
+        errorResponse.put("message", ex.getMessage());
+        return errorResponse;
+    }
+
 }

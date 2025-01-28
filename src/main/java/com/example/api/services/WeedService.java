@@ -35,9 +35,19 @@ public class WeedService {
         return weedMapper.weedToWeedDto(weed);
     }
 
+    public Set<RecoveryWeedDto> getAllWeedsWithImageUrls(){
+        Set<Weed> weedsList = weedRepository.findAllWithImages();
+        return weedMapper.weedsToWeedsDto(weedsList);
+    }
+
     public Set<Weed> getWeedsByArrayId(List<Long> weeds){
         Set<Weed> weedsList = weedRepository.findAllByIds(weeds);
-        return weedMapper.weedsToWeedsDto(weedsList);
+        return weedMapper.weedsToWeedsWithImages(weedsList);
+    }
+
+    public Set<Weed> getWeedsByArrayNames(List<String> weeds){
+        Set<Weed> weedsList = weedRepository.findAllByNames(weeds);
+        return weedMapper.weedsToWeedsWithImages(weedsList);
     }
     
 }

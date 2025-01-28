@@ -1,5 +1,7 @@
 package com.example.api.controllers;
 
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +34,10 @@ public class WeedController {
         return new ResponseEntity<>(weed, HttpStatus.OK);
     }
     
-    
+    @GetMapping
+    public ResponseEntity<Set<RecoveryWeedDto>> getWeedsWithImages(){
+        Set<RecoveryWeedDto> weeds = weedService.getAllWeedsWithImageUrls();
+        return new ResponseEntity<>(weeds, HttpStatus.ACCEPTED);
+    }
     
 }

@@ -16,6 +16,12 @@ public interface WeedRepository extends JpaRepository<Weed, Long> {
 
     @Query("SELECT w FROM Weed w WHERE w.id IN :weeds")
     Set<Weed> findAllByIds(@Param("weeds") List<Long> weeds);
+    
+    @Query("SELECT w FROM Weed w WHERE w.scientificName IN :weeds")
+    Set<Weed> findAllByNames(@Param("weeds") List<String> weeds);
+
+    @Query("SELECT w FROM Weed w JOIN FETCH w.images")
+    Set<Weed> findAllWithImages();
 
     // Optional<Weed> findByScientificName(String name);
 

@@ -18,7 +18,10 @@ public interface WeedMapper {
     RecoveryWeedDto weedToWeedDto(Weed weed);
 
     @Mapping(source = "images", target = "image_urls", qualifiedByName = "mapUrls")
-    Set<Weed> weedsToWeedsDto(Set<Weed> weeds);
+    Set<Weed> weedsToWeedsWithImages(Set<Weed> weeds);
+
+    @Mapping(source = "images", target = "image_urls", qualifiedByName = "mapUrls")
+    Set<RecoveryWeedDto> weedsToWeedsDto(Set<Weed> weeds);
 
     @Named("mapUrls")
     default List<String> mapUrls(List<Weed_Image> images){

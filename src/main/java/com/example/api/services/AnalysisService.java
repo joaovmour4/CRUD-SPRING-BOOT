@@ -1,12 +1,10 @@
 package com.example.api.services;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,9 +19,9 @@ import com.example.api.entities.Weed;
 import com.example.api.exceptions.ResourceNotFoundException;
 import com.example.api.mappers.AnalysisMapper;
 import com.example.api.repositories.AnalysisRepository;
+import com.example.api.yolo.Detection;
 
 import ai.onnxruntime.OrtException;
-import ch.qos.logback.core.subst.Token;
 
 @Service
 public class AnalysisService {
@@ -52,11 +50,15 @@ public class AnalysisService {
         Object authentication = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String id = tokenService.getIdUserFromToken(authentication.toString());
 
-        List<Long> weedIds = new ArrayList<>();
-        weedIds.add(1L);
-        weedIds.add(2L);
+        // List<Long> weedIds = new ArrayList<>();
+        // weedIds.add(1L);
+        // weedIds.add(2L);
 
-        Set<Weed> weeds = weedService.getWeedsByArrayId(weedIds);
+        List<String> weedNames = result.detections().stream()
+                           .map(d -> getDetectionName(d))
+                           .toList();
+
+        Set<Weed> weeds = weedService.getWeedsByArrayNames(weedNames);
 
         Analysis analysis = Analysis.builder()
                                     .idUser(Long.parseLong(id))
@@ -90,6 +92,13 @@ public class AnalysisService {
         return analysisMapper.recoveryAnalysisToDto(analysisSaved);
     }
 
+    public Boolean removeAnalysisById(Long id){
+        Analysis analysis = analysisRepository.findById(id)
+                                              .orElseThrow(()-> new ResourceNotFoundException("Análise não encontrada"));
+        analysisRepository.delete(analysis);
+        return true;
+    }
+
     public RecoveryAnalysisDto getAnalysisById(Long id){
         Analysis analysis = analysisRepository.findByIdWithResultWeeds(id)
                                                 .orElseThrow(()-> new ResourceNotFoundException("Análise não encontrada"));
@@ -101,6 +110,11 @@ public class AnalysisService {
 
         return analysisMapper.recoveryAnalysiesDto(analysies);
 
+    }
+
+    ////////////////////// Functions //////////////////////
+    private String getDetectionName(Detection detection){
+        return detection.label();
     }
 
 }
