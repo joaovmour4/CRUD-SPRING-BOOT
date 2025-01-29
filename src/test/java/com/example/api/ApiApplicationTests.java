@@ -49,7 +49,7 @@ class ApiApplicationTests {
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(createUserDto)))
 				.andExpect(status().isCreated())
-				.andExpect(jsonPath("$.name").value("JoãoV"));
+				.andExpect(jsonPath("$.name").value(createUserDto.name()));
 
 		RecoveryUserLoginDto recoveryUserLoginDto = new RecoveryUserLoginDto(
 			"JoãoV",
