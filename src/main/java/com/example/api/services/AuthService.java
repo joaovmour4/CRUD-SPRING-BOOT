@@ -18,7 +18,7 @@ public class AuthService {
     public String authenticate(String username, String password){
         RecoveryUserDto user = userService.authenticate(username, password);
         
-        return tokenService.generateToken(user.id());
+        return tokenService.generateToken(user);
 
     } 
 

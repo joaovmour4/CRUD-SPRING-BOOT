@@ -60,6 +60,7 @@ public class AnalysisController {
 
     @GetMapping("/user/{id}")
     public ResponseEntity<List<RecoveryAnalysisDto>> getAnalysisByUser(@PathVariable Long id) {
+        System.out.println(id);
         List<RecoveryAnalysisDto> analysies = analysisService.getAnalysisByUser(id);
         return new ResponseEntity<>(analysies, HttpStatus.ACCEPTED);
     }

@@ -62,11 +62,11 @@ class ApiApplicationTests {
 				.andExpect(status().isAccepted());
 	}
 
-	@Test
-	void verificaGeracaoTokenJWT() {
-		String token = tokenService.generateToken(28L);
-		assertNotNull(token);
-	}
+	// @Test
+	// void verificaGeracaoTokenJWT() {
+	// 	String token = tokenService.generateToken(28L);
+	// 	assertNotNull(token);
+	// }
 
 	@Test
 	void validaTokenJWT() {

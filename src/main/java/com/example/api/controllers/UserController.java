@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.api.dto.CreateUserDto;
+import com.example.api.dto.EditUserDto;
 import com.example.api.dto.RecoveryUserDto;
 import com.example.api.services.UserService;
 
@@ -32,6 +34,11 @@ public class UserController {
     @PostMapping
     public ResponseEntity<RecoveryUserDto> createUser(@RequestBody @Valid CreateUserDto createUserDto){
         return new ResponseEntity<>(userService.createUser(createUserDto), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<RecoveryUserDto> editUser(@PathVariable Long id, @RequestBody @Valid EditUserDto editUserDto){
+        return new ResponseEntity<>(userService.editUser(id, editUserDto), HttpStatus.OK);
     }
 
     @GetMapping

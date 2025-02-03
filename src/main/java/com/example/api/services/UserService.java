@@ -1,6 +1,7 @@
 package com.example.api.services;
 
 import com.example.api.dto.CreateUserDto;
+import com.example.api.dto.EditUserDto;
 import com.example.api.dto.RecoveryUserDto;
 import com.example.api.entities.User;
 import com.example.api.exceptions.AWSException;
@@ -55,6 +56,34 @@ public class UserService {
         User userSaved = userRepository.save(user);
 
         return userMapper.recoveryUserToDto(userSaved);
+
+    }
+
+    public RecoveryUserDto editUser(Long id, EditUserDto editUserDto){
+
+        User user = userRepository.findById(id)
+                                  .orElseThrow(()-> new ResourceNotFoundException("Usuário Não encontrado"));
+
+        if(!editUserDto.name().equalsIgnoreCase(user.getName()) && userRepository.existsByName(editUserDto.name())){
+            throw new ResourceAlreadyExistsException("Já existe um usuário com este nome");
+        }
+
+        if(!editUserDto.email().equalsIgnoreCase(user.getEmail()) && userRepository.existsByEmail(editUserDto.email())){
+            throw new ResourceAlreadyExistsException("Já existe um usuário com este email");
+        }
+
+        
+        if (!editUserDto.name().equalsIgnoreCase(user.getName())) {
+            user.setName(editUserDto.name());
+        }
+        if (!editUserDto.email().equalsIgnoreCase(user.getEmail())) {
+            user.setEmail(editUserDto.email());
+        }
+        if (!editUserDto.city().equalsIgnoreCase(user.getCity())) {
+            user.setCity(editUserDto.city());
+        }
+
+        return userMapper.recoveryUserToDto(userRepository.save(user));
 
     }
 
