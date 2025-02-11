@@ -38,7 +38,7 @@ public class UserService {
 
     public RecoveryUserDto createUser(CreateUserDto createUserDto){
 
-        if(userRepository.existsByName(createUserDto.name())){
+        if(userRepository.existsByNameIgnoreCase(createUserDto.name())){
             throw new ResourceAlreadyExistsException("Já existe um usuário com este nome");
         }
 
@@ -64,7 +64,7 @@ public class UserService {
         User user = userRepository.findById(id)
                                   .orElseThrow(()-> new ResourceNotFoundException("Usuário Não encontrado"));
 
-        if(!editUserDto.name().equalsIgnoreCase(user.getName()) && userRepository.existsByName(editUserDto.name())){
+        if(!editUserDto.name().equalsIgnoreCase(user.getName()) && userRepository.existsByNameIgnoreCase(editUserDto.name())){
             throw new ResourceAlreadyExistsException("Já existe um usuário com este nome");
         }
 
@@ -94,7 +94,7 @@ public class UserService {
     }
 
     public RecoveryUserDto getUserByName(String username){
-        User user = userRepository.findByName(username)
+        User user = userRepository.findByNameIgnoreCase(username)
                     .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
 
         return userMapper.recoveryUserToDto(user);
@@ -107,7 +107,7 @@ public class UserService {
     }
 
     public RecoveryUserDto authenticate(String name, String plainPassword){
-        User user = userRepository.findByName(name)
+        User user = userRepository.findByNameIgnoreCase(name)
                     .orElseThrow(() -> new AuthenticationFailedException("Credenciais inválidas"));
 
         if(!passwordService.verifyPassword(plainPassword, user.getPassword())){

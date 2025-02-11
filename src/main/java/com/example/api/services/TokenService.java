@@ -13,8 +13,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.stereotype.Service;
 
 import com.example.api.dto.RecoveryUserDto;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -34,7 +32,7 @@ public class TokenService {
             claims.put("user", recoveryUserDto);
         return Jwts.builder()
             .setClaims(claims)
-            .setSubject(recoveryUserDto.email())
+            .setSubject(recoveryUserDto.id().toString())
             .setIssuedAt(new Date())
             .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
             .signWith(SECRET_KEY)
