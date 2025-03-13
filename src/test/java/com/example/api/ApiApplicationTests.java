@@ -1,6 +1,5 @@
 package com.example.api;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -61,12 +60,6 @@ class ApiApplicationTests {
 				.content(objectMapper.writeValueAsString(recoveryUserLoginDto)))
 				.andExpect(status().isAccepted());
 	}
-
-	// @Test
-	// void verificaGeracaoTokenJWT() {
-	// 	String token = tokenService.generateToken(28L);
-	// 	assertNotNull(token);
-	// }
 
 	@Test
 	void validaTokenJWT() {
